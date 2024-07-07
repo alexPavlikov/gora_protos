@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "orders.v1;orders";
+
+package orders;
+
+service Orders {
+    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
+    rpc AcceptOrder(AcceptOrderRequest) returns (AcceptOrderResponse) {}
+    rpc RejectOrder(RejectOrderRequest) returns (RejectOrderResponse) {}
+    rpc FinishOrder(FinishOrderRequest) returns (FinishOrderResponse) {}
+}
+
+message CreateOrderRequest {
+    int64 Driver_ID = 1;
+    int64 Passanger_ID = 2;
+    google.protobuf.Timestamp CreateTime = 3;
+    string StartPoint = 4;
+    string EndPoint = 5;
+    uint32 ValuePassanger = 6;
+    bool BabyChair = 7;
+    bool WithAnimals = 8;
+    bool BadWeatherCondition = 9;
+    bool AM_PM = 10;
+}
+
+message CreateOrderResponse {
+    int64 ID = 1;
+    int64 EstimatedOrderAmount = 5; //???
+}
+
+message AcceptOrderRequest {
+    int64 ID = 1;
+}
+
+message AcceptOrderResponse {
+    string CarNumber = 2;
+	string CarColor = 3;
+    google.protobuf.Timestamp ArrivalTime = 4;
+}
+
+message RejectOrderRequest {
+    int64 ID = 1;
+}
+
+message RejectOrderResponse {
+    bool Reject = 1;
+}
+
+message FinishOrderRequest {
+    int64 ID = 1;
+    int64 Distance = 2;
+    google.protobuf.Timestamp TravelTime = 3;
+}
+
+message FinishOrderResponse {
+    int64 Sum = 1;
+}
